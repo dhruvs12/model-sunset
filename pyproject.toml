@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "model-sunset"
+version = "0.1.0"
+description = "Find retiring LLM model calls and freeze golden outputs before they die."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Dhruv" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+model-sunset = "model_sunset.cli:main"
+
+[tool.setuptools]
+packages = ["model_sunset"]
+
+[tool.setuptools.package-data]
+model_sunset = ["retirements.json", "playbook.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

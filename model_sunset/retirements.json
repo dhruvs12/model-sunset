@@ -1,0 +1,32 @@
+{
+  "checked": "2026-11-19",
+  "sources": {
+    "openai": "https://developers.openai.com/api/docs/deprecations",
+    "anthropic": "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+  },
+  "note": "One row per row of the provider's table. 'suggested' is the replacement the provider's page names; it is shown as a hint and never applied automatically. 'alias': true marks an undated alias that the page does not name itself, although every dated snapshot of it is listed for that date.",
+  "models": [
+    {"ids": ["claude-sonnet-4-5-20250929", "claude-sonnet-4-5"], "provider": "anthropic", "shutdown": "2026-11-30", "notice": "2026-09-30", "suggested": "claude-sonnet-5-5"},
+
+    {"ids": ["gpt-5", "gpt-5-2025-08-07"], "provider": "openai", "shutdown": "2026-12-11", "notice": "2026-06-11", "suggested": "gpt-6.1-sol"},
+    {"ids": ["gpt-5-mini", "gpt-5-mini-2025-08-07"], "provider": "openai", "shutdown": "2026-12-11", "notice": "2026-06-11", "suggested": "gpt-6.1-terra"},
+    {"ids": ["gpt-5-nano", "gpt-5-nano-2025-08-07"], "provider": "openai", "shutdown": "2026-12-11", "notice": "2026-06-11", "suggested": "gpt-6-luna"},
+    {"ids": ["gpt-5-pro", "gpt-5-pro-2025-10-06"], "provider": "openai", "shutdown": "2026-12-11", "notice": "2026-06-11", "suggested": "gpt-6.1-sol (reasoning.mode: pro, Responses API)"},
+    {"ids": ["o3", "o3-2025-04-16"], "provider": "openai", "shutdown": "2026-12-11", "notice": "2026-06-11", "suggested": "gpt-6.1-sol"},
+    {"ids": ["o3-pro", "o3-pro-2025-06-10"], "provider": "openai", "shutdown": "2026-12-11", "notice": "2026-06-11", "suggested": "gpt-6.1-sol (reasoning.mode: pro, Responses API)"},
+
+    {"ids": ["gpt-4o-2024-08-06", "gpt-4o-2024-11-20"], "provider": "openai", "shutdown": "2027-01-14", "notice": "2026-10-14", "suggested": "gpt-6-luna"},
+    {"ids": ["gpt-4o-mini-2024-07-18"], "provider": "openai", "shutdown": "2027-01-14", "notice": "2026-10-14", "suggested": "gpt-6-luna"},
+    {"ids": ["gpt-4.1-2025-04-14"], "provider": "openai", "shutdown": "2027-01-14", "notice": "2026-10-14", "suggested": "gpt-6-luna"},
+    {"ids": ["gpt-4.1-mini-2025-04-14"], "provider": "openai", "shutdown": "2027-01-14", "notice": "2026-10-14", "suggested": "gpt-6-luna"},
+    {"ids": ["gpt-4o", "gpt-4o-mini", "gpt-4.1", "gpt-4.1-mini"], "provider": "openai", "shutdown": "2027-01-14", "notice": "2026-10-14", "suggested": "gpt-6-luna", "alias": true},
+
+    {"ids": ["gpt-3.5-turbo", "gpt-3.5-turbo-0125"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-terra"},
+    {"ids": ["gpt-4", "gpt-4-0613", "gpt-4-1106-preview", "gpt-4-turbo", "gpt-4-turbo-2024-04-09"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-sol"},
+    {"ids": ["gpt-4.1-nano", "gpt-4.1-nano-2025-04-14"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-luna"},
+    {"ids": ["gpt-4o-2024-05-13"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-sol"},
+    {"ids": ["o1", "o1-2024-12-17", "o3-mini", "o3-mini-2025-01-31"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-sol"},
+    {"ids": ["o1-pro", "o1-pro-2025-03-19"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-sol (reasoning.mode: pro)"},
+    {"ids": ["o4-mini", "o4-mini-2025-04-16"], "provider": "openai", "shutdown": "2026-10-23", "notice": "2026-04-22", "suggested": "gpt-5.6-terra"}
+  ]
+}

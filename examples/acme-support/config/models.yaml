@@ -1,0 +1,7 @@
+# Model choices for background jobs.
+nightly_digest:
+  model: claude-sonnet-4-5
+spam_filter:
+  model: o4-mini
+translation:
+  model: gpt-6-luna   # not on any shutdown list; the scan must leave this alone

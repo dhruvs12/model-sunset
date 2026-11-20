@@ -1,0 +1,54 @@
+# Copy this file into any repo. Every Monday it scans for retiring model ids and, if it finds
+# some and no migration PR is open yet, starts one Devin session that runs the migration playbook.
+#
+# Setup in the repo's Settings > Secrets and variables > Actions:
+#   secret   DEVIN_API_KEY    a Devin service-user key (starts with cog_)
+#   variable DEVIN_ORG_ID     your Devin organization id (starts with org-)
+#   variable SUNSET_MAX_ACU   optional ACU cap per session (default 10)
+#   variable SUNSET_PATH      optional directory to scan (default: the whole repo)
+# Without DEVIN_API_KEY the last step only prints the request it would have sent.
+name: model-sunset
+on:
+  schedule:
+    - cron: "17 14 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  sunset:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install model-sunset
+        run: pip install "git+https://github.com/dhruvs12/model-sunset"
+      - name: Scan for retiring model ids
+        id: scan
+        env:
+          SUNSET_PATH: ${{ vars.SUNSET_PATH || '.' }}
+        run: |
+          model-sunset scan "$SUNSET_PATH" --exclude "sunset/*" --json > "$RUNNER_TEMP/hits.json"
+          model-sunset scan "$SUNSET_PATH" --exclude "sunset/*" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "count=$(python -c 'import json, sys; print(len(json.load(open(sys.argv[1]))))' "$RUNNER_TEMP/hits.json")" >> "$GITHUB_OUTPUT"
+      - name: Check for an open migration PR
+        id: pr
+        if: steps.scan.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo "open=$(gh pr list --state open --search 'model-sunset in:title' --json number --jq length)" >> "$GITHUB_OUTPUT"
+      - name: Start a Devin session with the migration playbook
+        if: steps.scan.outputs.count != '0' && steps.pr.outputs.open == '0'
+        env:
+          DEVIN_API_KEY: ${{ secrets.DEVIN_API_KEY }}
+          DEVIN_ORG_ID: ${{ vars.DEVIN_ORG_ID }}
+          SUNSET_MAX_ACU: ${{ vars.SUNSET_MAX_ACU || '10' }}
+        run: |
+          if [ -z "$DEVIN_API_KEY" ]; then
+            echo "::notice::DEVIN_API_KEY is not set, so this is a dry run."
+            model-sunset devin --hits "$RUNNER_TEMP/hits.json" --max-acu "$SUNSET_MAX_ACU" --dry-run
+          else
+            model-sunset devin --hits "$RUNNER_TEMP/hits.json" --max-acu "$SUNSET_MAX_ACU"
+          fi
